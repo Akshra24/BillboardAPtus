@@ -57,7 +57,7 @@ app.post('/api/initialize', async (req, res) => {
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
     
-    const account = new AptosAccount(Buffer.from(norm, 'hex'));
+    const account = new AptosAccount(Uint8Array.from(Buffer.from(norm, 'hex')));
 
     const payload = {
       type: 'entry_function_payload',
@@ -92,7 +92,7 @@ app.post('/api/set', async (req, res) => {
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
     
-    const account = new AptosAccount(Buffer.from(norm, 'hex'));
+    const account = new AptosAccount(Uint8Array.from(Buffer.from(norm, 'hex')));
 
     const payload = {
       type: 'entry_function_payload',
