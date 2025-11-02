@@ -29,13 +29,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve static files from the frontend directory
-const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
-if (fs.existsSync(FRONTEND_DIR)) {
-  app.use(express.static(FRONTEND_DIR));
-  console.log(`Serving frontend from: ${FRONTEND_DIR}`);
-}
-
 const APTOS_NODE_URL = process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com';
 const MODULE_ADDRESS = process.env.MODULE_ADDRESS || '0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871';
 

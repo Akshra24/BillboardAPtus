@@ -268,3 +268,4 @@ The server outputs heartbeat messages every 30 seconds to confirm it's running.
 
 Your Billboard application is now live and ready to use. Experiment with storing messages on the Aptos blockchain!
 
+
