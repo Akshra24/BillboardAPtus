@@ -16,7 +16,7 @@
   <div class="card">
     <h2>Initialize Billboard</h2>
     <p>Provide a private key and initial message to create the Billboard resource under your account.</p>
-    <input id="initKey" placeholder="Private key (hex)" />
+    <input id="initKey" type="password" placeholder="Private key (64 hex chars, e.g. 0x1234...abcd)" />
     <input id="initMsg" placeholder="Initial message" />
     <button id="initBtn">Initialize</button>
     <div id="initResult"></div>
@@ -24,7 +24,7 @@
 
   <div class="card">
     <h2>Set message</h2>
-    <input id="setKey" placeholder="Private key (hex)" />
+    <input id="setKey" type="password" placeholder="Private key (64 hex chars, e.g. 0x1234...abcd)" />
     <input id="setMsg" placeholder="New message" />
     <button id="setBtn">Set</button>
     <div id="setResult"></div>
