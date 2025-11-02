@@ -92,7 +92,8 @@ app.post('/initialize', async (req, res) => {
     if (typeof message !== 'string' || message.length === 0 || message.length > 4096) return res.status(400).json({ error: 'message must be a non-empty string <=4096 chars' });
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
-    const account = AptosAccount.fromHex(norm);
+    const account = new AptosAccount(Uint8Array.from(Buffer.from(norm, 'hex')));
+
 
     const payload = {
       type: 'entry_function_payload',
@@ -121,7 +122,8 @@ app.post('/set', async (req, res) => {
     if (typeof message !== 'string' || message.length === 0 || message.length > 4096) return res.status(400).json({ error: 'message must be a non-empty string <=4096 chars' });
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
-    const account = AptosAccount.fromHex(norm);
+    const account = new AptosAccount(Uint8Array.from(Buffer.from(norm, 'hex')));
+
 
     const payload = {
       type: 'entry_function_payload',
