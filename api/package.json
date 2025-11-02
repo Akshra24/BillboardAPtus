@@ -1,0 +1,13 @@
+{
+  "name": "billboard-api",
+  "version": "0.1.0",
+  "description": "Billboard API for Vercel deployment",
+  "main": "index.js",
+  "dependencies": {
+    "aptos": "^1.22.1",
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.3"
+  }
+}
+

@@ -1,0 +1,12 @@
+[package]
+name = "billboard"
+version = "0.1.0"
+authors = ["generated"]
+address = "0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871"
+description = "A simple Aptos Move billboard that stores a single message and an owner.\nReplace the `address` above with your account address before publishing."
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "mainnet" }
+
+[build]
+sources = ["sources"]

@@ -1,0 +1,11 @@
+{
+  "health": {
+    "status": "ok",
+    "node": "https://fullnode.devnet.aptoslabs.com",
+    "module": "0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871"
+  },
+  "message": {
+    "address": "0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871",
+    "message": "Welcome_to_Aptos_Move!"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/index.js"
+    },
+    {
+      "src": "/health",
+      "dest": "api/index.js"
+    },
+    {
+      "src": "/index.html",
+      "dest": "frontend/index.html"
+    },
+    {
+      "src": "/app.js",
+      "dest": "frontend/app.js"
+    },
+    {
+      "src": "/",
+      "dest": "frontend/index.html"
+    }
+  ],
+  "env": {
+    "APTOS_NODE_URL": "https://fullnode.devnet.aptoslabs.com",
+    "MODULE_ADDRESS": "0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871"
+  }
+}
+

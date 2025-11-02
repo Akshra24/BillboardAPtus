@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      - name: Install Aptos CLI (cargo)
+        env:
+          CARGO_HOME: ${{ runner.temp }}/cargo
+        run: |
+          export PATH="$HOME/.cargo/bin:$PATH"
+          cargo install aptos-cli
+
+      - name: Add cargo bin to PATH
+        run: echo "${HOME}/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Move: Compile package
+        run: aptos move compile --package-dir .
+
+      - name: Move: Run unit tests
+        run: aptos move test --package-dir .
+
+      - name: Start backend server
+        working-directory: ./backend
+        run: |
+          export PATH="$HOME/.cargo/bin:$PATH"
+          nohup node index.js > server.log 2>&1 &
+          sleep 2
+
+      - name: Backend: Verify endpoints
+        working-directory: ./backend
+        run: npm run verify
+
+      - name: Upload backend logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-server-log
+          path: backend/server.log

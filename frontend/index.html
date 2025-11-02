@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aptos Billboard - On-Chain Messaging</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 2.5rem;
+      margin-top: 1rem;
+    }
+
+    h1 {
+      color: #667eea;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .card {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .card h2 {
+      color: #333;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card h2::before {
+      content: "🎯";
+      margin-right: 0.5rem;
+    }
+
+    .card:nth-child(2) h2::before { content: "🚀"; }
+    .card:nth-child(3) h2::before { content: "✏️"; }
+    .card:nth-child(4) h2::before { content: "📖"; }
+
+    .card p {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.875rem;
+      margin-bottom: 1rem;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      font-family: 'Courier New', monospace;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #readResult, #initResult, #setResult {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      border: 1px solid #dee2e6;
+      min-height: 50px;
+    }
+
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #667eea;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: #004085;
+      font-size: 0.95rem;
+    }
+
+    .module-address {
+      font-family: 'Courier New', monospace;
+      background: #fff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #667eea;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 Aptos Billboard</h1>
+    <p class="subtitle">Decentralized On-Chain Messaging on Aptos Blockchain</p>
+
+    <div class="info-box">
+      <p><strong>Module Address:</strong> <span class="module-address">0x0b934d8296093a01ce424e530172908aefde114f1f9750a655573447fe5a9871</span></p>
+    </div>
+
+    <div class="card">
+      <h2>Initialize Billboard</h2>
+      <p>Create a new Billboard resource under your account with an initial message.</p>
+      <input id="initKey" type="password" placeholder="Your private key (hex format)" />
+      <textarea id="initMsg" placeholder="Enter your initial message..."></textarea>
+      <button id="initBtn">🚀 Initialize Billboard</button>
+      <div id="initResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>Update Message</h2>
+      <p>Update the message on your existing Billboard.</p>
+      <input id="setKey" type="password" placeholder="Your private key (hex format)" />
+      <textarea id="setMsg" placeholder="Enter your new message..."></textarea>
+      <button id="setBtn">✏️ Update Message</button>
+      <div id="setResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>Read Message</h2>
+      <p>View the current message stored on any Billboard address.</p>
+      <input id="readAddr" placeholder="Address to read (0x...)" />
+      <button id="readBtn">📖 Read Message</button>
+      <pre id="readResult"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
