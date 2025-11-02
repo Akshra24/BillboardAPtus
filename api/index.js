@@ -8,7 +8,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { AptosClient } = require('aptos');
+const { AptosClient, AptosAccount } = require('aptos');
 
 const app = express();
 
@@ -57,8 +57,7 @@ app.post('/api/initialize', async (req, res) => {
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
     
-    const { AptosAccount } = require('aptos');
-    const account = AptosAccount.fromHex(norm);
+    const account = new AptosAccount(Buffer.from(norm, 'hex'));
 
     const payload = {
       type: 'entry_function_payload',
@@ -93,8 +92,7 @@ app.post('/api/set', async (req, res) => {
     const norm = normalizePrivateKey(privateKey);
     if (!norm) return res.status(400).json({ error: 'invalid privateKey format' });
     
-    const { AptosAccount } = require('aptos');
-    const account = AptosAccount.fromHex(norm);
+    const account = new AptosAccount(Buffer.from(norm, 'hex'));
 
     const payload = {
       type: 'entry_function_payload',
