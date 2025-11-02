@@ -6,7 +6,8 @@ The error "AptosAccount.fromHex is not a function" occurred because the code was
 ## Solution Applied
 Changed from:
 ```javascript
-const account = AptosAccount.fromHex(norm);
+const account = new AptosAccount(Uint8Array.from(Buffer.from(norm, 'hex')));
+
 ```
 
 To:
